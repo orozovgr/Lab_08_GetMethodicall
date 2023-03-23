@@ -78,38 +78,6 @@ public class SafeInput
 
     }
 
-    /**
-     * Gets a double from the user with no contrains
-     * @param pipe the low value for the range
-     * @param prompt the high value for the range
-     * @return a valid int with no contraints
-     */
-    public static double getDouble(Scanner pipe, String prompt, double low, double high)
-    {
-        boolean done = false;
-        double retValue = 0;
-        String trash = "";
-
-        do {
-
-            System.out.println("\n" + prompt + "[" + low + " - " + high + "]:");
-            if(pipe.hasNextDouble())
-            {
-                retValue = pipe.nextDouble();
-                pipe.nextLine();
-                    done = true;
-            }
-            else
-            {
-                trash = pipe.nextLine();
-                System.out.println("You must enter a valid int [" + low + " - " + high + "]: " + trash);
-            }
-
-        }while(!done);
-
-        return retValue;
-
-    }
 
     /**
      * get any double
@@ -237,6 +205,88 @@ public class SafeInput
         return retValue;
 
     }
+
+    /**
+     * get a [Y/N] confirmation from the user
+     * @param pipe - Scanner instance to read the data System.in in most cases
+     * @param prompt - input prompt msg for user does not need [Y/N]
+     * @return - true for yes false for no
+     */
+
+    public static boolean getYNConfirm(Scanner pipe, String prompt)
+    {
+        boolean retVal = true;
+        String response = "";
+        boolean gotAVal = false;
+
+        do
+        {
+            System.out.print("\n" + prompt + "[Y/N]");
+            response = pipe.nextLine();
+            if (response.equalsIgnoreCase("Y"))
+            {
+                gotAVal = true;
+                retVal = true;
+            } else if (response.equalsIgnoreCase("N"))
+            {
+                gotAVal = true;
+                retVal = false;
+            }
+            else
+            {
+                System.out.println("You must answer [Y/N]! " + response);
+            }
+
+
+        }while (!gotAVal);
+
+        return retVal;
+
+
+    }
+
+    /**
+     * Display Pretty Header
+     * @param title - title of the header
+     * @return - pretty header string
+     */
+
+    public static void prettyHeader(String title){
+        final int HEADER_LENGTH = 60;
+        int  space = (HEADER_LENGTH - 6 - title.length())/2;
+
+        for(int i = 0; i < HEADER_LENGTH; i ++){
+            System.out.print("*");
+        }
+
+        System.out.println("");
+
+        for(int i = 0; i < 3; i ++){
+            System.out.print("*");
+        }
+
+        for(int i = 0; i < space; i ++){
+            System.out.print(" ");
+        }
+
+        System.out.print(title);
+
+        for(int i = 0; i < space; i ++){
+            System.out.print(" ");
+        }
+
+        for(int i = 0; i < 3; i ++){
+            System.out.print("*");
+        }
+
+        System.out.println("");
+
+        for(int i = 0; i < HEADER_LENGTH; i ++){
+            System.out.print("*");
+        }
+    }
+
+
 
 
 }
